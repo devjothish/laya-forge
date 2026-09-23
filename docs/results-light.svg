@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 290" role="img"
+  aria-label="Holdout results. Accuracy: injection 0.647 stock to 0.804 forged; destructive 0.755 to 0.796; gate 0.85 not met. ECE: injection 0.134 stock, 0.099 calibrated only, 0.107 forged; destructive 0.164, 0.077, 0.129; gate 0.10.">
+<title>agentguard holdout results</title>
+<style>
+  text { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #1F2733; }
+  .m { fill: #5B6675; font-size: 12px; } .h { font-size: 15px; font-weight: 700; }
+  .b { font-size: 13px; font-weight: 600; } .v { font-size: 12px; font-variant-numeric: tabular-nums; }
+</style>
+<rect width="880" height="290" fill="#FFFFFF"/>
+<circle cx="30.0" cy="72" r="5" fill="#FFFFFF" stroke="#5B6675" stroke-width="2"/>
+<text class="m" x="42" y="76">Laya as shipped</text>
+<circle cx="173.0" cy="72" r="5.5" fill="#B06A33" stroke="#FFFFFF" stroke-width="2"/>
+<text class="m" x="185.0" y="76">calibrated only</text>
+<circle cx="316.0" cy="72" r="5.5" fill="#3E6FB0" stroke="#FFFFFF" stroke-width="2"/>
+<text class="m" x="328.0" y="76">fine-tuned + calibrated</text>
+<text class="h" x="24" y="30">Holdout accuracy</text><text class="m" x="24" y="48">95% Wilson interval; the recipe gate is 0.85</text>
+<line x1="110.0" x2="110.0" y1="100" y2="250" stroke="#D5DBE3" stroke-width="1"/>
+<text class="m" x="110.0" y="268" text-anchor="middle">0.4</text>
+<line x1="178.3" x2="178.3" y1="100" y2="250" stroke="#D5DBE3" stroke-width="1"/>
+<text class="m" x="178.3" y="268" text-anchor="middle">0.5</text>
+<line x1="246.7" x2="246.7" y1="100" y2="250" stroke="#D5DBE3" stroke-width="1"/>
+<text class="m" x="246.7" y="268" text-anchor="middle">0.6</text>
+<line x1="315.0" x2="315.0" y1="100" y2="250" stroke="#D5DBE3" stroke-width="1"/>
+<text class="m" x="315.0" y="268" text-anchor="middle">0.7</text>
+<line x1="383.3" x2="383.3" y1="100" y2="250" stroke="#D5DBE3" stroke-width="1"/>
+<text class="m" x="383.3" y="268" text-anchor="middle">0.8</text>
+<line x1="451.7" x2="451.7" y1="100" y2="250" stroke="#D5DBE3" stroke-width="1"/>
+<text class="m" x="451.7" y="268" text-anchor="middle">0.9</text>
+<line x1="520.0" x2="520.0" y1="100" y2="250" stroke="#D5DBE3" stroke-width="1"/>
+<text class="m" x="520.0" y="268" text-anchor="middle">1.0</text>
+<line x1="417.5" x2="417.5" y1="96" y2="250" stroke="#1F2733" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text class="m" x="422.5" y="108">gate</text>
+<text class="b" x="24" y="144">injection</text><text class="m" x="24" y="160">n = 51</text>
+<line x1="185.2" x2="356.0" y1="130" y2="130" stroke="#5B6675" stroke-width="2"/>
+<circle cx="278.8" cy="130" r="5" fill="#FFFFFF" stroke="#5B6675" stroke-width="2"/>
+<text class="v" x="177.2" y="134" text-anchor="end">0.647</text>
+<line x1="301.3" x2="444.8" y1="150" y2="150" stroke="#3E6FB0" stroke-width="2"/>
+<circle cx="386.1" cy="150" r="5.5" fill="#3E6FB0" stroke="#FFFFFF" stroke-width="2"/>
+<text class="v" x="293.3" y="154" text-anchor="end">0.804</text>
+<text class="b" x="24" y="216">destructive</text><text class="m" x="24" y="232">n = 49</text>
+<line x1="260.3" x2="417.5" y1="202" y2="202" stroke="#5B6675" stroke-width="2"/>
+<circle cx="352.6" cy="202" r="5" fill="#FFFFFF" stroke="#5B6675" stroke-width="2"/>
+<text class="v" x="252.3" y="206" text-anchor="end">0.755</text>
+<line x1="287.7" x2="444.8" y1="222" y2="222" stroke="#3E6FB0" stroke-width="2"/>
+<circle cx="380.6" cy="222" r="5.5" fill="#3E6FB0" stroke="#FFFFFF" stroke-width="2"/>
+<text class="v" x="279.7" y="226" text-anchor="end">0.796</text>
+<text class="h" x="610" y="30">Calibration error (ECE)</text><text class="m" x="610" y="48">lower is better; the recipe gate is 0.10</text>
+<line x1="610.0" x2="610.0" y1="100" y2="250" stroke="#D5DBE3" stroke-width="1"/>
+<text class="m" x="610.0" y="268" text-anchor="middle">0.00</text>
+<line x1="670.0" x2="670.0" y1="100" y2="250" stroke="#D5DBE3" stroke-width="1"/>
+<text class="m" x="670.0" y="268" text-anchor="middle">0.05</text>
+<line x1="730.0" x2="730.0" y1="100" y2="250" stroke="#D5DBE3" stroke-width="1"/>
+<text class="m" x="730.0" y="268" text-anchor="middle">0.10</text>
+<line x1="790.0" x2="790.0" y1="100" y2="250" stroke="#D5DBE3" stroke-width="1"/>
+<text class="m" x="790.0" y="268" text-anchor="middle">0.15</text>
+<line x1="850.0" x2="850.0" y1="100" y2="250" stroke="#D5DBE3" stroke-width="1"/>
+<text class="m" x="850.0" y="268" text-anchor="middle">0.20</text>
+<line x1="730.0" x2="730.0" y1="96" y2="250" stroke="#1F2733" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text class="m" x="735.0" y="108">gate</text>
+<line x1="610" x2="850" y1="140" y2="140" stroke="#D5DBE3" stroke-width="1"/>
+<circle cx="770.8" cy="128" r="5" fill="#FFFFFF" stroke="#5B6675" stroke-width="2"/>
+<circle cx="728.8" cy="140" r="5.5" fill="#B06A33" stroke="#FFFFFF" stroke-width="2"/>
+<circle cx="738.4" cy="152" r="5.5" fill="#3E6FB0" stroke="#FFFFFF" stroke-width="2"/>
+<text class="m" x="610" y="118">injection</text>
+<text class="v" x="719.8" y="144" text-anchor="end">0.099</text>
+<text class="v" x="747.4" y="156">0.107</text>
+<line x1="610" x2="850" y1="212" y2="212" stroke="#D5DBE3" stroke-width="1"/>
+<circle cx="806.8" cy="200" r="5" fill="#FFFFFF" stroke="#5B6675" stroke-width="2"/>
+<circle cx="702.4" cy="212" r="5.5" fill="#B06A33" stroke="#FFFFFF" stroke-width="2"/>
+<circle cx="764.8" cy="224" r="5.5" fill="#3E6FB0" stroke="#FFFFFF" stroke-width="2"/>
+<text class="m" x="610" y="190">destructive</text>
+<text class="v" x="693.4" y="216" text-anchor="end">0.077</text>
+<text class="v" x="773.8" y="228">0.129</text>
+</svg>

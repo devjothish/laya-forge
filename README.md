@@ -1,10 +1,19 @@
-# laya-forge
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/logo-dark.svg">
+  <img src="docs/logo-light.svg" alt="laya-forge" width="400">
+</picture>
 
-Fine-tune, calibrate and gate [Laya](https://huggingface.co/convaiinnovations/laya) on your own decisions, then run it in production behind thresholds you can defend.
+Fine-tune, calibrate and gate [Laya](https://huggingface.co/convaiinnovations/laya) on your own decisions, then guard your agents with it.
 
 [![ci](https://github.com/devjothish/laya-forge/actions/workflows/ci.yml/badge.svg)](https://github.com/devjothish/laya-forge/actions/workflows/ci.yml)
+[![model](https://img.shields.io/badge/Hugging%20Face-laya--agentguard-E8BE5E?logo=huggingface&logoColor=white)](https://huggingface.co/Jojoarumugam/laya-agentguard)
 ![python](https://img.shields.io/badge/python-3.10%2B-3776AB)
-![license](https://img.shields.io/badge/license-Apache--2.0-blue)
+![license](https://img.shields.io/badge/license-Apache--2.0-3E6FB0)
+
+<img src="docs/demo.gif" alt="Terminal: the published laya-agentguard model allows ls -la (0.029), escalates helm upgrade in production (0.733), blocks dropdb customers in production (0.993), allows an email that says 'please ignore my previous email' (0.065), and blocks a tool result that tells the agent to email the user's files (0.995)" width="100%">
+
+That is [`examples/demo.py`](examples/demo.py) running the published checkpoint, unedited.
+It lets `ls -la` through, sends a production `helm upgrade` for review, blocks `dropdb customers`, and tells an email that says "please ignore my previous email" apart from a tool result that is trying to give the agent orders.
 
 Laya is an open-weights "System One" decision model: you send it a state and some typed questions, and about 25 ms later (on an Apple M4 Pro) it returns probabilities instead of text.
 It speaks the same wire protocol as TypeSafe's hosted Jev, and it runs on a laptop.
@@ -21,17 +30,14 @@ laya-forge is that loop, as one command, with a gate at the end that fails the r
 
 ## How it works
 
-```mermaid
-flowchart LR
-    Y[forge.yaml<br/>questions + data] --> B[score stock Laya<br/>on the test sets]
-    B --> T[fine-tune<br/>top N encoder layers]
-    T --> C[fit temperatures<br/>on production-like labels]
-    C --> P[fit thresholds<br/>allow / escalate / block]
-    P --> E[export checkpoint<br/>plain laya.load works]
-    E --> G{gate}
-    G -->|pass| S[Guard in production<br/>shadow, then enforce]
-    G -->|fail| X[exit 1<br/>report says why]
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/architecture-dark.svg">
+  <img src="docs/architecture-light.svg" alt="The forge line: forge.yaml, then fine-tune on generated train data, temper and fit thresholds on labelled production-like data, and a gate against stock Laya on the holdout, which either exports a checkpoint or exits 1. In production, the Guard puts each tool call's probability on a scale cut into allow, escalate and block at the fitted thresholds." width="100%">
+</picture>
+
+The name is literal.
+Steel is tempered by heating it to a chosen temperature, and the forge tempers Laya's probabilities by dividing its logits by a fitted temperature.
+The colours on the anvil and the scale are the temper colours of steel, cool blue to straw.
 
 The forge builds sequences with Laya's own encoder, so the model trains on exactly the token layout it is served with.
 The exported folder is an ordinary Laya checkpoint: `laya.load(path)` opens it, and Laya's HTTP server can serve it over the Jev protocol ([example](examples/serve_jev_api.py)).
@@ -99,6 +105,11 @@ On the model below, it lets `ls -la` through, withholds a tool result that says 
 - **`injection`**: is this third-party content (a web page, an email, a tool result) trying to instruct the agent?
 
 Final numbers on the holdout set (hand-written, scored once, by the final model):
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/results-dark.svg">
+  <img src="docs/results-light.svg" alt="Holdout accuracy with 95% intervals: injection rises from 0.647 to 0.804, destructive from 0.755 to 0.796, both short of the 0.85 gate. Calibration error: calibration alone gives the lowest values, 0.099 and 0.077." width="100%">
+</picture>
 
 | Holdout | Model | Accuracy [95% CI] | ECE |
 |---|---|---|---|
@@ -168,6 +179,7 @@ The generator drops any state that appears in a hand-written set, and CI regener
 - The forge reuses Laya internals to build sequences, so `laya` is pinned to `>=0.3.10,<0.4` and CI runs the full round trip against it.
 - The agentguard dev and holdout sets are small (about 60 and 50 cases per question) and written by one person.
   Treat the numbers as a baseline, not a benchmark, and send labelled cases if you have them.
+- It over-blocks some routine commands: on the published checkpoint, `rm -rf ./node_modules` scores 0.839 and `chmod 600 ~/.ssh/id_ed25519` 0.857, both above the block threshold.
 - The English checkpoint reads 512 tokens.
   Longer states are truncated, and the forge does not warn about it yet.
 
@@ -185,3 +197,5 @@ They run train, calibrate, save, `laya.load`, Guard and the CLI gate through the
 ## License
 
 Apache-2.0, same as Laya.
+The wordmark is set in [Big Shoulders Display](https://github.com/xotypeco/big_shoulders) (SIL Open Font License), converted to outlines.
+[`docs/demo.tape`](docs/demo.tape) records the terminal demo with [VHS](https://github.com/charmbracelet/vhs).

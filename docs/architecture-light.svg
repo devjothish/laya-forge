@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" role="img"
+  aria-label="laya-forge: an offline pipeline fine-tunes, tempers and gates a Laya checkpoint; in production the Guard maps each tool call's probability to allow, escalate or block">
+<title>How laya-forge works</title>
+<style>
+  text { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #1F2733; }
+  .m { fill: #5B6675; font-size: 12px; }
+  .h { font-size: 16px; font-weight: 700; }
+  .b { font-size: 13px; font-weight: 600; }
+  .code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.5px; }
+  .line { stroke: #C9D1DB; stroke-width: 2; fill: none; }
+  .drop { stroke: #5B6675; stroke-width: 1.2; stroke-dasharray: 3 3; fill: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .c0, .c1 { opacity: 0 !important; } .c2 { opacity: 1 !important; }
+    .needle { transform: translateX(669.6px) !important; }
+    .spark { display: none; }
+  }
+</style>
+<defs>
+  <linearGradient id="temper" x1="330" x2="672" y1="0" y2="0" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#3E6FB0"/><stop offset="0.45" stop-color="#7A4E9C"/>
+    <stop offset="0.72" stop-color="#B06A33"/><stop offset="1" stop-color="#E8BE5E"/>
+  </linearGradient>
+  <radialGradient id="glow"><stop offset="0" stop-color="#E8BE5E"/><stop offset="1" stop-color="#E8BE5E" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="880" height="560" fill="#FFFFFF"/>
+
+<text class="h" x="24" y="36">Forge, once per model</text>
+<text class="m code" x="24" y="56">laya-forge run forge.yaml</text>
+<path class="line" d="M40 186 H620"/>
+<path class="line" d="M620 186 L668 142 H700 M620 186 L668 230 H700"/>
+<text class="b" x="40" y="172">forge.yaml</text>
+<circle cx="40" cy="186" r="4" fill="#1F2733"/>
+<circle cx="200" cy="186" r="9" fill="#FFFFFF" stroke="#1F2733" stroke-width="2"/>
+<text class="b" x="200" y="220" text-anchor="middle">fine-tune</text>
+<text class="m" x="200" y="236" text-anchor="middle">top N encoder layers</text>
+<circle cx="340" cy="186" r="9" fill="#FFFFFF" stroke="#1F2733" stroke-width="2"/>
+<text class="b" x="340" y="220" text-anchor="middle">temper</text>
+<text class="m" x="340" y="236" text-anchor="middle">fit temperatures</text>
+<circle cx="480" cy="186" r="9" fill="#FFFFFF" stroke="#1F2733" stroke-width="2"/>
+<text class="b" x="480" y="220" text-anchor="middle">thresholds</text>
+<text class="m" x="480" y="236" text-anchor="middle">allow, escalate, block</text>
+<path d="M620 173 l13 13 l-13 13 l-13 -13 z" fill="#FFFFFF" stroke="#1F2733" stroke-width="2"/>
+<text class="b" x="620" y="220" text-anchor="middle">gate</text>
+<text class="m" x="620" y="236" text-anchor="middle">vs stock Laya</text>
+<rect x="130" y="78" width="142" height="44" rx="2" fill="#F4F6F9"/>
+<rect x="130" y="78" width="3" height="44" fill="#3E6FB0"/>
+<text class="b" x="142" y="96">train.jsonl</text><text class="m" x="142" y="113">generated, labels by rule</text>
+<path class="drop" d="M200 122 V174"/>
+<rect x="290" y="78" width="240" height="44" rx="2" fill="#F4F6F9"/>
+<rect x="290" y="78" width="3" height="44" fill="#7A4E9C"/>
+<text class="b" x="302" y="96">calibration</text><text class="m" x="302" y="113">labelled traffic that looks like production</text>
+<path class="drop" d="M340 122 V174"/>
+<path class="drop" d="M480 122 V174"/>
+<rect x="548" y="78" width="142" height="44" rx="2" fill="#F4F6F9"/>
+<rect x="548" y="78" width="3" height="44" fill="#B06A33"/>
+<text class="b" x="560" y="96">holdout</text><text class="m" x="560" y="113">hand-labelled, scored once</text>
+<path class="drop" d="M620 122 V174"/>
+<rect x="704" y="116" width="156" height="48" rx="2" fill="#F4F6F9"/>
+<text class="b" x="716" y="136">pass: checkpoint</text>
+<text class="m" x="716" y="154">plain laya.load() opens it</text>
+<rect x="704" y="208" width="156" height="48" rx="2" fill="none" stroke="#C9D1DB" stroke-width="1.5"/>
+<text class="b" x="716" y="228">fail: exit 1</text>
+<text class="m" x="716" y="246">report.md says why</text>
+<g class="spark"><circle r="11" fill="url(#glow)" opacity=".8"/><circle r="3.5" fill="#E8BE5E"/>
+  <animateMotion dur="5s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"
+    path="M40 186 H620 L668 142 H700"/>
+  <animate attributeName="opacity" dur="5s" repeatCount="indefinite" values="0;1;1;0" keyTimes="0;.08;.9;1"/></g>
+<line x1="24" x2="856" y1="296" y2="296" stroke="#C9D1DB" stroke-width="1"/>
+<text class="h" x="24" y="334">Guard, on every tool call</text>
+<text class="m code" x="24" y="354">Guard("runs/agentguard/model").check(tool_call, questions=["destructive"])</text>
+<rect x="24" y="386" width="270" height="92" rx="2" fill="#F4F6F9"/>
+<text class="m" x="36" y="406">the agent is about to run</text>
+<g class="case c0" opacity="1"><animate attributeName="opacity" dur="9s" repeatCount="indefinite" values="1;1;0;0;1" keyTimes="0;.29;.32;.98;1"/><text class="code" x="36" y="430" xml:space="preserve">bash: ls -la</text></g>
+<g class="case c1" opacity="0"><animate attributeName="opacity" dur="9s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;.33;.36;.62;.65;1"/><text class="code" x="36" y="430" xml:space="preserve">bash: helm upgrade api ./chart</text><text class="code" x="36" y="448" xml:space="preserve">      -n production</text><text class="code" x="36" y="466" xml:space="preserve">env:  production</text></g>
+<g class="case c2" opacity="0"><animate attributeName="opacity" dur="9s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;.66;.69;.95;.98;1"/><text class="code" x="36" y="430" xml:space="preserve">bash: dropdb customers</text><text class="code" x="36" y="448" xml:space="preserve">env:  production</text></g>
+<path class="line" d="M294 434 H310"/>
+<rect x="330" y="426" width="342" height="16" fill="url(#temper)"/>
+<rect x="466.6" y="426" width="2.4" height="16" fill="#FFFFFF"/>
+<text class="m" x="467.8" y="460" text-anchor="middle">0.403</text>
+<rect x="592.1" y="426" width="2.4" height="16" fill="#FFFFFF"/>
+<text class="m" x="593.3" y="460" text-anchor="middle">0.770</text>
+<text class="b" x="398.9" y="414" text-anchor="middle" fill="#3E6FB0" style="fill:#3E6FB0">allow</text>
+<text class="b" x="530.6" y="414" text-anchor="middle" fill="#7A4E9C" style="fill:#7A4E9C">escalate</text>
+<text class="b" x="632.7" y="414" text-anchor="middle" fill="#A25F2B" style="fill:#A25F2B">block</text>
+<text class="m" x="322" y="439" text-anchor="end">0</text><text class="m" x="680" y="439">1</text>
+<text class="m" x="501.0" y="482" text-anchor="middle">P(destructive), temperature-scaled; thresholds fitted by the forge</text>
+<g class="needle" transform="translate(339.9 0)"><path d="M0 422 V446" stroke="#1F2733" stroke-width="2.5"/><path d="M-6 452 h12 l-6 -7 z" fill="#1F2733"/><animateTransform attributeName="transform" type="translate" dur="9s" repeatCount="indefinite" calcMode="spline" values="339.9 0;339.9 0;580.7 0;580.7 0;669.6 0;669.6 0;339.9 0" keyTimes="0;.30;.36;.63;.69;.96;1" keySplines="0 0 1 1;.3 .8 .3 1;0 0 1 1;.3 .8 .3 1;0 0 1 1;.3 .8 .3 1"/></g>
+<text class="case c0 b" opacity="1" x="339.9" y="502" text-anchor="middle">p = 0.029<animate attributeName="opacity" dur="9s" repeatCount="indefinite" values="1;1;0;0;1" keyTimes="0;.29;.32;.98;1"/></text>
+<text class="case c1 b" opacity="0" x="580.7" y="502" text-anchor="middle">p = 0.733<animate attributeName="opacity" dur="9s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;.33;.36;.62;.65;1"/></text>
+<text class="case c2 b" opacity="0" x="669.6" y="502" text-anchor="middle">p = 0.993<animate attributeName="opacity" dur="9s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;.66;.69;.95;.98;1"/></text>
+<path class="line" d="M694 434 H710"/>
+<g class="out case c0" opacity="1"><animate attributeName="opacity" dur="9s" repeatCount="indefinite" values="1;1;0;0;1" keyTimes="0;.29;.32;.98;1"/><rect x="710" y="412" width="146" height="44" rx="2" fill="none" stroke="#3E6FB0" stroke-width="2"/><text class="b" x="722" y="430" style="fill:#3E6FB0">allow</text><text class="m" x="722" y="447">run the tool</text></g>
+<g class="out case c1" opacity="0"><animate attributeName="opacity" dur="9s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;.33;.36;.62;.65;1"/><rect x="710" y="412" width="146" height="44" rx="2" fill="none" stroke="#7A4E9C" stroke-width="2"/><text class="b" x="722" y="430" style="fill:#7A4E9C">escalate</text><text class="m" x="722" y="447">ask a person or an LLM</text></g>
+<g class="out case c2" opacity="0"><animate attributeName="opacity" dur="9s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;.66;.69;.95;.98;1"/><rect x="710" y="412" width="146" height="44" rx="2" fill="none" stroke="#A25F2B" stroke-width="2"/><text class="b" x="722" y="430" style="fill:#A25F2B">block</text><text class="m" x="722" y="447">refuse, log the span</text></g>
+<text class="m" x="24" y="530">shadow=True records every verdict and blocks nothing, so you can measure it on live traffic first.</text>
+<text class="m" x="24" y="548">Each check emits an OpenTelemetry span with the probability, the action and the latency.</text>
+</svg>
