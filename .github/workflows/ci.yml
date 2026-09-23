@@ -12,11 +12,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@v10
         with:
           enable-cache: true
+          cache-dependency-glob: pyproject.toml
 
       # CPU wheels: the tests train a tiny checkpoint, so CUDA would be 2 GB of dead weight.
       - run: uv venv --python 3.12 && uv pip install torch --index-url https://download.pytorch.org/whl/cpu
