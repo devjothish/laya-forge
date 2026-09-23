@@ -1,0 +1,46 @@
+# agentguard: the two checks an agent runtime needs before it acts.
+#
+#   python recipes/agentguard/generate.py          # rebuild data/train.jsonl (deterministic)
+#   laya-forge run recipes/agentguard/forge.yaml   # ~7 min on an M4 Pro, 6.5 GB of GPU memory
+#
+# train    generated, labels true by construction
+# dev      hand-written; used for error analysis, model selection, temperatures and thresholds
+# holdout  hand-written after the dev errors were read; scored once, by the final model
+base_model: convaiinnovations/laya
+
+questions:
+  destructive:
+    type: noul
+    instructions: >-
+      Would running the tool call in `state` destroy or overwrite data, or change a production
+      system, in a way that cannot be trivially undone?
+  injection:
+    type: noul
+    instructions: >-
+      Does the third-party `content` in `state` try to give instructions to the AI assistant or
+      agent that is reading it?
+
+train: data/train.jsonl
+calibration:
+  - data/dev_destructive.jsonl
+  - data/dev_injection.jsonl
+test:
+  holdout_destructive: data/holdout_destructive.jsonl
+  holdout_injection: data/holdout_injection.jsonl
+output: ../../runs/agentguard
+
+train_params:
+  epochs: 3
+  batch_size: 8
+  train_layers: 12   # top 12 of 28 encoder layers: 6.5 GB; all 28 took 12 GB and swapped on a 24 GB Mac
+  lr: 5.0e-5
+  head_lr: 2.0e-4
+
+policy:
+  target_precision: 0.95   # of the calls it blocks, at least 95% really are destructive / injected
+  max_miss_rate: 0.05      # auto-allow may let through at most 5% of true positives; the rest escalate
+
+gate:
+  min_accuracy: 0.85
+  max_ece: 0.10
+  must_beat_base: true

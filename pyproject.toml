@@ -1,0 +1,60 @@
+[project]
+name = "laya-forge"
+version = "0.1.0"
+description = "Fine-tune, calibrate and gate Laya on your own decisions"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+keywords = ["laya", "jev", "system-one", "guardrails", "calibration", "fine-tuning", "agents"]
+dependencies = [
+    # Pinned to a minor version: the forge builds sequences with Laya's own (private) encoder
+    # so training and serving tokenise identically. tests/test_roundtrip.py catches drift.
+    "laya>=0.3.10,<0.4",
+    "torch>=2.2",
+    "numpy>=1.26",
+    "safetensors>=0.4",
+    "huggingface-hub>=0.24",
+    "pydantic>=2.6",
+    "pyyaml>=6.0",
+    "opentelemetry-api>=1.20",
+]
+
+[project.scripts]
+laya-forge = "laya_forge.cli:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3.0", "ruff>=0.8.0", "mypy>=1.13.0", "types-PyYAML", "opentelemetry-sdk>=1.20"]
+
+[project.urls]
+Repository = "https://github.com/devjothish/laya-forge"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["laya_forge"]
+
+[tool.setuptools.package-data]
+laya_forge = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]  # test the source tree, never a stale installed copy
+markers = ["model: loads the real 421M Laya checkpoint (downloads ~800 MB once)"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+extend-exclude = ["runs"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+"recipes/**" = ["E501"]  # data literals read better unwrapped
+
+[tool.mypy]
+strict = true
+plugins = ["pydantic.mypy"]
+ignore_missing_imports = true

@@ -1,0 +1,41 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      # CPU wheels: the tests train a tiny checkpoint, so CUDA would be 2 GB of dead weight.
+      - run: uv venv --python 3.12 && uv pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: uv pip install ".[dev]"
+
+      - name: lint
+        run: uv run ruff check . && uv run ruff format --check .
+
+      - name: types
+        run: uv run mypy laya_forge
+
+      # The round-trip tests run train -> calibrate -> save -> laya.load -> Guard on a tiny
+      # randomly initialised checkpoint in Laya's real format, so a breaking change in Laya's
+      # internals fails here rather than in a user's training run.
+      - name: tests
+        run: uv run pytest -q
+
+      # The committed splits must be exactly what the generator produces.
+      - name: agentguard data is reproducible
+        run: |
+          uv run python recipes/agentguard/generate.py
+          git diff --exit-code recipes/agentguard/data
