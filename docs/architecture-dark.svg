@@ -27,7 +27,7 @@
 <text class="h" x="24" y="36">Forge, once per model</text>
 <text class="m code" x="24" y="56">laya-forge run forge.yaml</text>
 <path class="line" d="M40 186 H620"/>
-<path class="line" d="M620 186 L668 142 H700 M620 186 L668 230 H700"/>
+<path class="line" d="M620 186 L668 142 H714 M620 186 L668 230 H714"/>
 <text class="b" x="40" y="172">forge.yaml</text>
 <circle cx="40" cy="186" r="4" fill="#DCE3EC"/>
 <circle cx="200" cy="186" r="9" fill="#0D1117" stroke="#DCE3EC" stroke-width="2"/>
@@ -51,19 +51,19 @@
 <text class="b" x="302" y="96">calibration</text><text class="m" x="302" y="113">labelled traffic that looks like production</text>
 <path class="drop" d="M340 122 V174"/>
 <path class="drop" d="M480 122 V174"/>
-<rect x="548" y="78" width="142" height="44" rx="2" fill="#161B22"/>
-<rect x="548" y="78" width="3" height="44" fill="#B06A33"/>
-<text class="b" x="560" y="96">holdout</text><text class="m" x="560" y="113">hand-labelled, scored once</text>
+<rect x="540" y="78" width="166" height="44" rx="2" fill="#161B22"/>
+<rect x="540" y="78" width="3" height="44" fill="#B06A33"/>
+<text class="b" x="552" y="96">holdout</text><text class="m" x="552" y="113">hand-labelled, scored once</text>
 <path class="drop" d="M620 122 V174"/>
-<rect x="704" y="116" width="156" height="48" rx="2" fill="#161B22"/>
-<text class="b" x="716" y="136">pass: checkpoint</text>
-<text class="m" x="716" y="154">plain laya.load() opens it</text>
-<rect x="704" y="208" width="156" height="48" rx="2" fill="none" stroke="#3A4452" stroke-width="1.5"/>
-<text class="b" x="716" y="228">fail: exit 1</text>
-<text class="m" x="716" y="246">report.md says why</text>
-<g class="spark"><circle r="11" fill="url(#glow)" opacity=".8"/><circle r="3.5" fill="#E8BE5E"/>
+<rect x="714" y="116" width="150" height="48" rx="2" fill="#161B22"/>
+<text class="b" x="726" y="136">pass: checkpoint</text>
+<text class="m" x="726" y="154">plain laya.load() opens it</text>
+<rect x="714" y="208" width="150" height="48" rx="2" fill="none" stroke="#3A4452" stroke-width="1.5"/>
+<text class="b" x="726" y="228">fail: exit 1</text>
+<text class="m" x="726" y="246">report.md says why</text>
+<g class="spark" opacity="0"><circle r="11" fill="url(#glow)" opacity=".8"/><circle r="3.5" fill="#E8BE5E"/>
   <animateMotion dur="5s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"
-    path="M40 186 H620 L668 142 H700"/>
+    path="M40 186 H620 L668 142 H714"/>
   <animate attributeName="opacity" dur="5s" repeatCount="indefinite" values="0;1;1;0" keyTimes="0;.08;.9;1"/></g>
 <line x1="24" x2="856" y1="296" y2="296" stroke="#3A4452" stroke-width="1"/>
 <text class="h" x="24" y="334">Guard, on every tool call</text>
