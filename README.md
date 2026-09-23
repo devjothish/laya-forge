@@ -72,6 +72,7 @@ The run writes `model/` (the checkpoint), `report.md` and `report.json`.
 from laya_forge import Guard
 
 guard = Guard("runs/agentguard/model", shadow=True)  # shadow: record verdicts, block nothing
+# or a checkpoint on the Hub: Guard("Jojoarumugam/laya-agentguard", shadow=True)
 
 verdict = guard.check(tool_call, questions=["destructive"])
 if not verdict.allowed:  # allow / escalate / block, from the fitted thresholds
@@ -120,6 +121,7 @@ What the numbers support:
   You need a few hundred labelled production examples for thresholds you can trust.
 
 Full reports: [holdout](recipes/agentguard/results/holdout.md), and the [dev-selection run](recipes/agentguard/results/dev-selection.md).
+The checkpoint is on Hugging Face as [Jojoarumugam/laya-agentguard](https://huggingface.co/Jojoarumugam/laya-agentguard), with its thresholds inside.
 Training takes 6.5 minutes on an M4 Pro.
 
 ### How the evaluation was kept honest

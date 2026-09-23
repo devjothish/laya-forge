@@ -22,7 +22,7 @@ from typing import Any, Literal
 import numpy as np
 from opentelemetry import trace
 
-from .model import Item, load_agent
+from .model import Item, load_agent, resolve_dir
 from .spec import PolicyParams, State
 
 Action = Literal["allow", "escalate", "block"]
@@ -113,7 +113,7 @@ class Verdict:
 class Guard:
     """A forged checkpoint plus its fitted thresholds, as one production decision.
 
-        guard = Guard("runs/agentguard/model")
+        guard = Guard("runs/agentguard/model")          # or a Hub id: "Jojoarumugam/laya-agentguard"
         verdict = guard.check(tool_call, questions=["destructive"])
         if not verdict.allowed: ...
 
@@ -128,8 +128,8 @@ class Guard:
         shadow: bool = False,
         on_error: Action = "escalate",
     ) -> None:
-        self.model_dir = str(model_dir)
-        meta = json.loads((Path(model_dir) / "rl_agent_config.json").read_text()).get("laya_forge")
+        self.model_dir = str(resolve_dir(str(model_dir)))  # a local folder or a Hub id
+        meta = json.loads((Path(self.model_dir) / "rl_agent_config.json").read_text()).get("laya_forge")
         if not meta or not meta.get("policy"):
             raise ValueError(f"{model_dir} has no laya-forge policy; train it with `laya-forge run`")
         self.questions: dict[str, dict[str, Any]] = meta["questions"]
